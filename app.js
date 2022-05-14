@@ -31,10 +31,10 @@ function checkMatch(stone, avengers) {
     console.log("checking match for stone:", stone);
     console.log(clickedMatched.clickedAvengers);
     console.log("db avengers:", avengers);
-    
+
     //handling HULK case:
-    if (typeof avengers[0] === 'object') {
-        avengers = [avengers[0].name]
+    if (typeof avengers[0] === "object") {
+        avengers = [avengers[0].name];
     }
 
     if (
@@ -56,13 +56,16 @@ const stones = document.querySelectorAll(".stone");
 const avengers = document.querySelectorAll(".avenger");
 const glove = document.querySelector(".infinity_glove");
 
+//clicking on the mighty glove is a high order function:
+let captainAmericaCounter = 2;
+
 glove.addEventListener("click", ({ target }) => {
     console.log("USE WITH CAUTION!!!", target.id);
-    // let match = false;
 
     let checkDB = endGameData.filter(
         (item) => item.name === clickedMatched.clickedStone
     );
+
 
     if (clickedMatched.clickedAvengers.length === 0) {
         console.log("Choose avengers for the mission!");
@@ -75,9 +78,16 @@ glove.addEventListener("click", ({ target }) => {
         );
         if (match) {
             clickedMatched.clickedAvengers.forEach((avenger) => {
-                hideAvenger(avenger);
+                if (avenger === "captain-america" && captainAmericaCounter !== 0) {
+                    captainAmericaCounter -= 1;
+                    if (captainAmericaCounter === 0) {
+                        hideAvenger(avenger)
+                    }
+                } else {
+                    hideAvenger(avenger);
+                }
             });
-            hideStone(clickedMatched.clickedStone)
+            hideStone(clickedMatched.clickedStone);
         }
         clearClickedMatch();
     }
