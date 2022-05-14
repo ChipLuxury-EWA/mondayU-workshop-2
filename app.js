@@ -66,7 +66,6 @@ glove.addEventListener("click", ({ target }) => {
         (item) => item.name === clickedMatched.clickedStone
     );
 
-
     if (clickedMatched.clickedAvengers.length === 0) {
         console.log("Choose avengers for the mission!");
     } else if (checkDB[0] === undefined) {
@@ -78,10 +77,13 @@ glove.addEventListener("click", ({ target }) => {
         );
         if (match) {
             clickedMatched.clickedAvengers.forEach((avenger) => {
-                if (avenger === "captain-america" && captainAmericaCounter !== 0) {
+                if (
+                    avenger === "captain-america" &&
+                    captainAmericaCounter !== 0
+                ) {
                     captainAmericaCounter -= 1;
                     if (captainAmericaCounter === 0) {
-                        hideAvenger(avenger)
+                        hideAvenger(avenger);
                     }
                 } else {
                     hideAvenger(avenger);
