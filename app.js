@@ -37,11 +37,9 @@ function checkMatch(stone, avengers) {
         avengers.sort().toString()
     ) {
         console.log("Match!");
-        clearSelections();
         return true;
     } else {
         console.log("no match");
-        clearSelections();
         return false;
     }
 }
@@ -55,47 +53,63 @@ const glove = document.querySelector(".infinity_glove");
 
 glove.addEventListener("click", ({ target }) => {
     console.log("USE WITH CAUTION!!!", target.id);
+    let match = false;
 
     let checkDB = endGameData.filter(
         (item) => item.name === clickedMatched.clickedStone
     );
-    const ans = checkMatch(clickedMatched.clickedStone, checkDB[0].avengers);
-
-    //clearing clicked matched:
-    if (ans === true) {
-        clickedMatched.clickedStone = "";
-        clickedMatched.clickedAvengers = [];
+    if (checkDB[0] === undefined) {
+        console.log("Choose a stone, choose wisely");
+    } else {
+        const match = checkMatch(
+            clickedMatched.clickedStone,
+            checkDB[0].avengers
+        );
     }
+    clearClickedMatch();
 });
 
 for (let i = 0; i < stones.length; i++) {
     // console.log(stones[i].id)
+
     stones[i].addEventListener("click", ({ target }) => {
-        target.style.backgroundColor = "blue";
-        console.log("clicked on stone:", target.id);
-        clickedMatched.clickedStone = target.id;
+        if (clickedMatched.clickedStone === "") {
+            target.style.backgroundColor = "blue";
+            console.log("clicked on stone:", target.id);
+            clickedMatched.clickedStone = target.id;
+        } else {
+            console.log("You can't handle more then one stone, it's DANGEROUS");
+        }
     });
 }
 
 for (let i = 0; i < avengers.length; i++) {
     // console.log(stones[i].id)
     avengers[i].addEventListener("click", ({ target }) => {
-        target.style.backgroundColor = "blue";
-        console.log("clicked on avengers:", target.id);
-        clickedMatched.clickedAvengers.push(target.id);
-
-        if (clickedMatched.clickedAvengers.length > 2) {
-            clickedMatched.clickedAvengers = [];
-            clearSelections();
+        if (clickedMatched.clickedAvengers.length >= 2) {
+            console.log("Don't chhose more then two avengers, they are very busy")
+            // clickedMatched.clickedAvengers = [];
+            // clearClickedMatch();
+        } else {
+            clickedMatched.clickedAvengers.push(target.id);
+            target.style.backgroundColor = "blue";
+            console.log("clicked on avengers:", target.id);
         }
     });
 }
 
-function clearSelections() {
+function clearBackgroundSelections() {
     for (let i = 0; i < avengers.length; i++) {
         avengers[i].style.backgroundColor = "";
     }
     for (let i = 0; i < stones.length; i++) {
         stones[i].style.backgroundColor = "";
     }
+}
+
+function clearClickedMatch() {
+    clickedMatched.clickedStone = "";
+    clickedMatched.clickedAvengers = [];
+    clearBackgroundSelections();
+    console.log("All selections cleared");
 }
