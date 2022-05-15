@@ -26,6 +26,8 @@ const endGameData = [
 ];
 
 const clickedMatched = { clickedStone: "", clickedAvengers: [] };
+let captainAmericaCounter = 2;
+let winCounter = 0;
 
 function checkMatch(stone, avengers) {
     console.log("checking match for stone:", stone);
@@ -42,6 +44,7 @@ function checkMatch(stone, avengers) {
         avengers.sort().toString()
     ) {
         console.log("Match!");
+        winCounter++;
         return true;
     } else {
         console.log("no match");
@@ -55,9 +58,6 @@ function checkMatch(stone, avengers) {
 const stones = document.querySelectorAll(".stone");
 const avengers = document.querySelectorAll(".avenger");
 const glove = document.querySelector(".infinity_glove");
-
-//clicking on the mighty glove is a high order function:
-let captainAmericaCounter = 2;
 
 glove.addEventListener("click", ({ target }) => {
     console.log("USE WITH CAUTION!!!", target.id);
@@ -92,6 +92,9 @@ glove.addEventListener("click", ({ target }) => {
             hideStone(clickedMatched.clickedStone);
         }
         clearClickedMatch();
+    }
+    if (winCounter === 6) {
+        winMessage();
     }
 });
 
@@ -150,4 +153,22 @@ function clearClickedMatch() {
     clickedMatched.clickedAvengers = [];
     clearBackgroundSelections();
     console.log("All selections cleared");
+}
+
+function winMessage() {
+    const display = document.createElement("H1");
+    display.innerText = "You now have all the stones!";
+
+    const warning = document.createElement("p");
+    warning.innerText = "Use the glove with CAUTION!";
+
+    const newGameButton = document.createElement("button");
+    newGameButton.innerText = "New Game";
+    newGameButton.addEventListener("click", function () {
+        window.location.reload();
+    });
+
+    warning.appendChild(newGameButton);
+    display.appendChild(warning);
+    document.body.appendChild(display);
 }

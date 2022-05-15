@@ -10,15 +10,11 @@ You can play it live [here](https://chipluxury-ewa.github.io/mondayU-workshop-2/
 4. Some of the avengers need to found more then one stone.
 5. ENJOY!
 
-## Version 1.0.0 features:
+## Version 1.1.0 features:
 
 -   When a match is made the stones and the avengers will disappear unless the avenger need to collect more stones.
 -   For full experiment watch the console.log
-
-## In version 2.0.0 I'm working on:
-
--   Message screen instead of the console.log.
--   Correct match counter the show the player win screen
+-   When al matches are correct wining screen will be shown.
 
 # Welcome to Workshop 2
 
